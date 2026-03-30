@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hollyburn Moral Compass Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #0a1a0f;
+    --green-mid: #1a3a20;
+    --green-border: #2d5a1b;
+    --green-light: #4a8a30;
+    --green-pale: #a8c87a;
+    --gold: #c8a840;
+    --gold-light: #e8c860;
+    --parchment: #e8dfc0;
+    --parchment-dark: #c8b890;
+    --ink: #1a1208;
+    --ink-mid: #3a2a10;
+    --text-body: #2a3a1a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--green-dark);
+    color: var(--parchment);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Stars */
+  .stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: rgba(255,255,220,0.7);
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) ease-in-out infinite var(--delay, 0s);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+  }
+
+  /* Layout */
+  .site-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 60px 0 48px;
+    border-bottom: 1px solid var(--green-border);
+  }
+
+  /* Diamond — updated to SVG matched to logo gold */
+  .diamond-svg {
+    display: block;
+    margin: 0 auto 12px;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .logo-sign {
+    display: inline-block;
+    border: 3px solid var(--gold);
+    border-radius: 6px;
+    padding: 10px 28px;
+    background: var(--green-mid);
+    margin-bottom: 28px;
+  }
+
+  .logo-sign span {
+    font-family: 'Courier Prime', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--gold-light);
+  }
+
+  h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(20px, 4vw, 32px);
+    font-weight: 700;
+    color: var(--parchment);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    color: var(--green-pale);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Nav */
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 0;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--green-pale);
+    text-decoration: none;
+    padding: 6px 16px;
+    border: 1px solid var(--green-border);
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+
+  nav a:hover {
+    background: var(--green-mid);
+    color: var(--gold-light);
+    border-color: var(--gold);
+  }
+
+  /* Sections */
+  section {
+    margin: 56px 0;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .section-header h2 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .section-header::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--green-border);
+  }
+
+  /* Video placeholder */
+  .video-container {
+    background: var(--green-mid);
+    border: 1px solid var(--green-border);
+    border-radius: 4px;
+    aspect-ratio: 16/9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--green-pale);
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    text-align: center;
+    padding: 24px;
+  }
+
+  .video-icon {
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--green-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-icon::after {
+    content: '';
+    border-left: 16px solid var(--green-pale);
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    margin-left: 4px;
+  }
+
+  /* Poster iframe */
+  .poster-wrapper {
+    border: 1px solid var(--green-border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .poster-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--green-mid);
+    border-bottom: 1px solid var(--green-border);
+  }
+
+  .poster-controls span {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    color: var(--green-pale);
+    letter-spacing: 1px;
+  }
+
+  .poster-frame-wrapper {
+    width: 100%;
+    height: 600px;
+    overflow: auto;
+    background: #f5f5f0;
+  }
+
+  #poster-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    transform-origin: top left;
+    display: block;
+  }
+
+  /* Documentation */
+  .doc-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: var(--green-mid);
+    border: 1px solid var(--green-border);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--parchment);
+    transition: all 0.2s;
+  }
+
+  .doc-card:hover {
+    border-color: var(--gold);
+    background: #1f4528;
+  }
+
+  .doc-icon {
+    width: 40px;
+    height: 48px;
+    background: var(--parchment);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .doc-icon::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    border-style: solid;
+    border-width: 0 10px 10px 0;
+    border-color: transparent var(--green-mid) transparent transparent;
+  }
+
+  .doc-icon svg {
+    color: var(--ink-mid);
+  }
+
+  .doc-info h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .doc-info p {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    color: var(--green-pale);
+    letter-spacing: 0.5px;
+  }
+
+  .doc-arrow {
+    margin-left: auto;
+    color: var(--gold);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .about-grid { grid-template-columns: 1fr; }
+  }
+
+  .about-card {
+    padding: 20px;
+    background: var(--green-mid);
+    border: 1px solid var(--green-border);
+    border-radius: 4px;
+  }
+
+  .about-card h3 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .about-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--parchment);
+    opacity: 0.85;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 32px 0 0;
+    border-top: 1px solid var(--green-border);
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--green-pale);
+    opacity: 0.6;
+  }
+
+  /* Fade in on load */
+  .site-wrapper {
+    animation: fadeIn 1s ease both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="site-wrapper">
+
+  <header>
+    <!-- Updated diamond SVG matched to logo gold #d2a50f -->
+    <svg class="diamond-svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+      <polygon points="11,1 21,11 11,21 1,11"
+        fill="#0f3a18" stroke="#d2a50f" stroke-width="1.8"/>
+    </svg>
+
+    <div class="logo-sign"><span>CAMP HOLLYBURN</span></div>
+    <h1>The Hollyburn Moral Compass Project</h1>
+    <p class="subtitle">Capstone — Interactive Narrative &amp; AI Game Design</p>
+  </header>
+
+  <nav>
+    <a href="#video">Gameplay Demo</a>
+    <a href="#poster">Poster</a>
+    <a href="#documentation">Documentation</a>
+    <a href="#research">Research Paper</a>
+    <a href="#about">About</a>
+  </nav>
+
+  <!-- Video -->
+  <section id="video">
+    <div class="section-header"><h2>Gameplay Demo</h2></div>
+    <!--
+      SWAP THIS for a YouTube embed when ready:
+      <iframe width="100%" style="aspect-ratio:16/9;border:none;border-radius:4px"
+        src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+        allowfullscreen></iframe>
+    -->
+    <div class="video-container">
+      <div class="video-icon"></div>
+      <span>Gameplay demo coming soon</span>
+      <span style="font-size:11px;opacity:0.6">Replace this placeholder with a YouTube embed</span>
+    </div>
+  </section>
+
+  <!-- Poster -->
+  <section id="poster">
+    <div class="section-header"><h2>Poster</h2></div>
+    <div class="poster-wrapper">
+      <div class="poster-controls">
+        <span>Academic Poster</span>
+      </div>
+      <div class="poster-frame-wrapper" style="height:700px">
+        <embed src="poster.pdf" type="application/pdf" width="100%" height="100%">
+      </div>
+    </div>
+  </section>
+
+  <!-- Documentation -->
+  <section id="documentation">
+    <div class="section-header"><h2>Documentation</h2></div>
+    <div class="poster-wrapper">
+      <div class="poster-controls">
+        <span>Project Documentation</span>
+      </div>
+      <div class="poster-frame-wrapper" style="height:700px">
+        <embed src="documentation.pdf" type="application/pdf" width="100%" height="100%">
+      </div>
+    </div>
+  </section>
+
+  <!-- Research Paper -->
+  <section id="research">
+    <div class="section-header"><h2>Research Paper</h2></div>
+    <div class="poster-wrapper">
+      <div class="poster-controls">
+        <span>Research Paper</span>
+      </div>
+      <div class="poster-frame-wrapper" style="height:700px">
+        <embed src="research.pdf" type="application/pdf" width="100%" height="100%">
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-header"><h2>About the Project</h2></div>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Concept</h3>
+        <p>Hollyburn is a 2D top-down mystery game set at a summer camp that conceals a darker truth. Players investigate the camp's secrets through exploration, clue collection, and AI-powered NPC conversations.</p>
+      </div>
+      <div class="about-card">
+        <h3>Technology</h3>
+        <p>Built in Godot 4 using the Sprout Lands asset pack. NPC dialogue is powered by the Eidolon AI SDK with per-character agent YAML configurations running on a local Docker server.</p>
+      </div>
+      <div class="about-card">
+        <h3>Research Focus</h3>
+        <p>The project explores how AI-driven dialogue affects player moral reasoning — specifically whether dynamic, context-aware NPCs create more meaningful ethical dilemmas than scripted dialogue.</p>
+      </div>
+      <div class="about-card">
+        <h3>Repository</h3>
+        <p>Source code available on GitHub at <a href="https://github.com/IainMacGraham/hollyburns" target="_blank" style="color:var(--gold-light)">IainMacGraham/hollyburns</a>. Godot 4.6 game engine with gdscripts aided by Claude.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>The Hollyburn Moral Compass Project &nbsp;·&nbsp; Capstone Submission</p>
+  </footer>
+
+</div>
+
+<script>
+// Stars
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 60; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:-${Math.random()*4}s;opacity:${0.3+Math.random()*0.7}`;
+  starsEl.appendChild(s);
+}
+
+</script>
+</body>
+</html>
